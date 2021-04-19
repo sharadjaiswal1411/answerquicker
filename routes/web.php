@@ -13,11 +13,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'FrontEndController@index');
+Route::get('quiz/{slug}', 'FrontEndController@quiz');
+
+Route::group(['prefix' => 'imports'], function () {
+   
+	Route::get('categories/{sector_id}/','ImportsController@categories');
+	Route::get('questions/{category_id}/{slug}','ImportsController@importFromIm');
+	Route::get('quizzes/{category_id}/{slug}','ImportsController@quizzes');
+	Route::get('quizzes','ImportsController@quizzesCron');
+	Route::get('examveda','ImportsController@examvedaCron');
+	Route::get('mcqlearn','ImportsController@mcqlearnCron');
+	Route::get('electrical4u','ImportsController@electrical4uCron');
+
 });
 
 
+
 Route::group(['prefix' => 'admin'], function () {
+
+	
+    
     Voyager::routes();
+
+   
 });
